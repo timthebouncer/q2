@@ -1,6 +1,7 @@
 import React from 'react'
 import Form from "../../../component/form";
 import TextInput from "../../../component/form/input";
+import './index.css'
 
 const LoginPage=()=>{
   return(
