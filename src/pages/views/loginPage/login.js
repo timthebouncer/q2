@@ -3,6 +3,17 @@ import Form from "../../../component/form";
 import TextInput from "../../../component/form/input";
 import './index.css'
 
+
+const requiredValidator=val=>{
+
+  if(!val){
+    return ['此處為必填']
+  }
+  return []
+}
+
+
+
 const LoginPage=()=>{
   return(
     <div className="min-w-500 bg-gray-100">
@@ -13,6 +24,7 @@ const LoginPage=()=>{
             name="username"
             placeholder="請輸入帳號"
             label="帳號"
+            validators={[requiredValidator]}
           />
           <TextInput
             name="password"

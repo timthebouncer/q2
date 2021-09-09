@@ -133,14 +133,11 @@ const Form = props => {
     setFieldValue,
     registerInput
   };
-  console.log(providerValue)
   return (
     <Provider value={providerValue}>
       <form
         onSubmit={onSubmit}
-        // onReset={onReset}
         className={props.className}
-        id={props.id}
       >
         {props.children}
       </form>

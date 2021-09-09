@@ -33,7 +33,6 @@ function App() {
           {/*))}*/}
 
           {router.map((item, i) => {
-            console.log(item)
             return <Route exact={item.exact} path={item.path} key={i} render={(props)=>{
               return <item.component/>
               // if(auth){

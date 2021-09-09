@@ -53,5 +53,5 @@ TextInput.defaultProps = defaultProps;
 
 const FormTextInput = withForm(TextInput);
 
-export { TextInput };
+// export { TextInput };
 export default FormTextInput;
