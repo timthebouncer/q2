@@ -1,8 +1,11 @@
-import React from 'react'
+import React,{useContext} from 'react'
 import Form from "../../../component/form";
 import TextInput from "../../../component/form/input";
 import './index.css'
-
+import Service from '../../../api/api'
+import {Link} from "react-router-dom";
+import {AuthToken} from "../../../App";
+import { useHistory } from "react-router-dom";
 
 const requiredValidator=val=>{
 
@@ -13,13 +16,23 @@ const requiredValidator=val=>{
 }
 
 
-
 const LoginPage=()=>{
+  const history = useHistory()
+  const setAuth = useContext(AuthToken)
+  const loginFun=async(data)=>{
+    await Service.Login.userLogin(data)
+      .then((res)=>{
+        localStorage.setItem('token', res.data.token)
+        setAuth(res.data.token)
+        history.push('/index')
+      })
+  }
+
   return(
-    <div className="min-w-500 bg-gray-100">
-      <h1 className="text-center">註冊</h1>
-      <div className="sign-up">
-        <Form className="formWrapper" onSubmit={data => console.log(data)}>
+    <div className="login-wrapper">
+      <h1 className="text-center">登入</h1>
+      <div className="sign-in">
+        <Form className="formWrapper" onSubmit={data => loginFun(data)}>
           <TextInput
             name="username"
             placeholder="請輸入帳號"
@@ -31,10 +44,9 @@ const LoginPage=()=>{
             type="password"
             placeholder="請輸入密碼"
             label="密碼"
+            validators={[requiredValidator]}
           />
-          <button className="submit-btn" type="submit">
-            註冊
-          </button>
+          <Link className="register-btn" to='/register'>註冊</Link>
           <button className="submit-btn" type="submit">
             登入
           </button>

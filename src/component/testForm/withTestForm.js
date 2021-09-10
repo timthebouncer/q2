@@ -1,23 +1,34 @@
-import React,{useContext} from 'react'
+import React,{useContext, useEffect} from 'react'
 import {UserContext} from './testForm'
 
 
 const withTestForm=InputComponent=>{
 
   const WrappedWithForm=(props)=>{
-    const {setFiledValue} = useContext(UserContext)
-    console.log(props)
+    const {data,setFiledValue,requireFiledValue} = useContext(UserContext)
 
+    useEffect(
+      () =>
+        requireFiledValue({
+          name: props.name,
+          validators: props.validators
+        }),
+      []
+    );
+
+
+    //把對應輸入框的name及輸入值傳進去
     const onchange=val=>{
-      console.log(val,123)
       setFiledValue(props.name, val)
-      if (props.onChange) {
-        props.onChange(val);
-      }
+      // if (props.onChange) {
+      //   console.log(props.onChange)
+      //   props.onChange(val);
+      // }
     }
 
+    const inputValue = data[props.name]
 
-    return <InputComponent {...props} value={data[props.name]} onChange={onchange} />
+    return <InputComponent {...props} value={inputValue} onChange={onchange} />
   }
 
   return WrappedWithForm

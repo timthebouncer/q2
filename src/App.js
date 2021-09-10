@@ -1,22 +1,14 @@
 import './App.css';
-import React from 'react'
+import React,{useState,createContext, useEffect} from 'react'
 import router from "./route/route";
-import {Switch, Route, Link, BrowserRouter as Router} from 'react-router-dom'
-import Service from './api/api'
+import {Switch, Route, Link, Redirect, BrowserRouter as Router} from 'react-router-dom'
 
+import Layout from '../src/component/Layout/layout'
+const AuthToken = createContext(null)
 function App() {
 
-  // const tryApi=()=>{
-  //   const body = {
-  //     username: 'aa@aa.aa', // {string} 帳號
-  //     password: 'a00a', // {string} 密碼
-  //   }
-  //   Service.Login.userLogin(body)
-  //     .then((res)=>{
-  //       console.log(res)
-  //     })
-  //
-  // }
+  const[auth, setAuth] = useState('')
+  let token = localStorage.getItem('token')
 
   return (
 
@@ -34,13 +26,25 @@ function App() {
 
           {router.map((item, i) => {
             return <Route exact={item.exact} path={item.path} key={i} render={(props)=>{
-              return <item.component/>
-              // if(auth){
-              //   return
-              // }
+              if(!item.auth){
+                return(
+                <AuthToken.Provider value={setAuth}>
+                <item.component/>
+                </AuthToken.Provider>
+                )
+              }else if(token){
+                return (
+                  <Layout>
+                    <item.component/>
+                  </Layout>
+                )
+              }else {
+                return <Redirect to={'/404'} />
+              }
             }} />
           })
           }
+
         </Switch>
       </div>
     </Router>
@@ -49,3 +53,4 @@ function App() {
 }
 
 export default App;
+export {AuthToken}

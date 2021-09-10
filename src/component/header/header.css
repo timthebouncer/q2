@@ -1,0 +1,9 @@
+.header-wrapper{
+  @apply flex justify-between
+}
+.left-section{
+    @apply flex
+}
+.right-section{
+    @apply flex
+}

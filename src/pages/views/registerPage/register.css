@@ -1,13 +1,11 @@
-.login-wrapper{
+.register-wrapper{
     @apply relative max-w-screen-sm bg-gray-100 m-auto top-72
-    /*position: relative;*/
-    /*top: 25%;*/
-    /*margin: auto;*/
-    /*/maxwidth*/
+
 }
-.formWrapper{
-    @apply flex justify-around items-center flex-col h-80
+.form-wrapper{
+    @apply flex justify-around items-center flex-col h-96
 }
+
 .register-btn{
     @apply text-blue-300
 }
