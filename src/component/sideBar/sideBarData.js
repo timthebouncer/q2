@@ -6,11 +6,12 @@ export const SidebarData =[
   {
     name:'個人資訊管理',
     path:'/userInfo',
+    icon:'user',
     component:UserInfo
   },
   {
     name:'會員管理',
-    path:'/userManagement',
+    path:'/user',
     component:UserManagement
   }
 

@@ -1,5 +1,5 @@
 .header-wrapper{
-  @apply flex justify-between
+  @apply flex justify-between m-5
 }
 .left-section{
     @apply flex

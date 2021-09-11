@@ -1,5 +1,5 @@
 .login-wrapper{
-    @apply relative max-w-screen-sm bg-gray-100 m-auto top-72
+    @apply max-w-screen-sm bg-gray-100 m-auto transform translate-y-44
     /*position: relative;*/
     /*top: 25%;*/
     /*margin: auto;*/
