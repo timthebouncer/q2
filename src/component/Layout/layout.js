@@ -9,7 +9,7 @@ const Layout=(props)=>{
     <div className="layout-wrapper">
     <Header switchMenu={switchMenu} setSwitchMenu={setSwitchMenu} />
     <div className="flex">
-      <div className="border-r-2 border-black-600">
+      <div className="border-r-2 border-black">
         <NavBar switchMenu={switchMenu} />
       </div>
       <div className="component-wrapper w-full">

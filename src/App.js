@@ -6,24 +6,22 @@ import Service from './api/api'
 import Layout from '../src/component/Layout/layout'
 import axios from "axios";
 
-const AuthToken = createContext(null)
+// const AuthToken = createContext(null)
+const GetUserInfo = createContext(null)
 function App() {
-
-  const[auth, setAuth] = useState('')
-  let token = localStorage.getItem('token')
-
-    // useEffect(()=>{
-    //     let config={
-    //         headers: {
-    //             'Authorization': token
-    //         },
-    //     }
-    //    Service.Auth.userAuth(config)
-    //        .then((res)=>{
-    //            console.log(res)
-    //        })
-    //
-    // },[token])
+        const [userInfo, setUserInfo]=useState('')
+  // const[auth, setAuth] = useState(false)
+    let token =localStorage.getItem('token')
+    useEffect(()=>{
+        let config={
+           headers: {"Authorization" : `Bearer ${token}`}
+        }
+       Service.Auth.userAuth(config)
+           .then((res)=>{
+               console.log(res)
+               setUserInfo(res.data.data)
+           })
+    },[])
 
 
   return (
@@ -31,28 +29,21 @@ function App() {
     <Router>
       <div className='app-wrapper'>
         <Switch>
-          {/*{router.map((route, index) => (*/}
-          {/*   <Route*/}
-          {/*    key={index}*/}
-          {/*    path={route.path}*/}
-          {/*    component={route.component}*/}
-          {/*    exact={route.exact || true}*/}
-          {/*  />*/}
-          {/*))}*/}
-
           {router.map((item, i) => {
             return <Route exact={item.exact} path={item.path} key={i} render={(props)=>{
               if(!item.auth){
                 return(
-                <AuthToken.Provider value={setAuth}>
+                //<AuthToken.Provider value={setAuth}>
                 <item.component/>
-                </AuthToken.Provider>
+                //</AuthToken.Provider>
                 )
-              }else if(token){
+              }else if(true){
                 return (
-                  <Layout>
-                    <item.component/>
-                  </Layout>
+                    <GetUserInfo.Provider value={userInfo}>
+                        <Layout>
+                            <item.component/>
+                        </Layout>
+                    </GetUserInfo.Provider>
                 )
               }else {
                 return <Redirect to={'/404'} />
@@ -69,4 +60,5 @@ function App() {
 }
 
 export default App;
-export {AuthToken}
+// export {AuthToken}
+export {GetUserInfo};

@@ -1,5 +1,5 @@
-import React,{useRef,useEffect,useState} from 'react'
-
+import React,{useContext,useEffect,useState} from 'react'
+import {GetUserInfo} from '../../../App'
 
 async function handleUpload(e,avatar) {
     // STEP 2: 得到該檔案的 Blob, i.e., e.target.files
@@ -56,7 +56,7 @@ return true
 
 const UserInfo=()=>{
     const [avatar,setAvatar] = useState('')
-
+    const getUser = useContext(GetUserInfo)
     useEffect(()=>{
         let imgSrc = document.querySelector(".img-thumbnail")
         setAvatar(imgSrc)
@@ -67,6 +67,11 @@ const UserInfo=()=>{
         <div>
             <img src="https://via.placeholder.com/300x300/efefef?text=Avatar" alt="image-placehoder"
                  className="img-thumbnail w-40" data-target="image-preview" />
+        </div>
+        <div>
+            {
+            getUser?<span>{getUser.name}({getUser.username})</span>:<span>Loading...    </span>
+            }
         </div>
         <div>
             <label>

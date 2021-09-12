@@ -4,10 +4,10 @@ import TextInput from "../../../component/form/input";
 import './index.css'
 import Service from '../../../api/api'
 import {Link} from "react-router-dom";
-import {AuthToken} from "../../../App";
+// import {AuthToken} from "../../../App";
 import { useHistory } from "react-router-dom";
 import message from '../../../component/toast/toast'
-import modal from '../../../component/modal/modal'
+
 
 const requiredValidator=val=>{
 
@@ -20,12 +20,12 @@ const requiredValidator=val=>{
 
 const LoginPage=()=>{
   const history = useHistory()
-  const setAuth = useContext(AuthToken)
+  // const setAuth = useContext(AuthToken)
   const loginFun=async(data)=>{
     await Service.Login.userLogin(data)
       .then((res)=>{
         localStorage.setItem('token', res.data.token)
-        setAuth(res.data.token)
+
         message.success(res.data.message,'success')
         history.push('/index')
       })
@@ -33,10 +33,6 @@ const LoginPage=()=>{
             message.error(err.response.data.message,'error')
         })
   }
-
-  // useEffect(()=>{
-  //     modal.show()
-  // },[])
 
 
   return(

@@ -4,6 +4,12 @@ import Form from "../../../component/form";
 import TextInput from "../../../component/form/input";
 import './register.css'
 import Service from '../../../api/api'
+import message from '../../../component/toast/toast'
+import { useHistory } from "react-router-dom";
+
+
+
+
 
 const requiredValidator=val=>{
 
@@ -13,21 +19,25 @@ const requiredValidator=val=>{
   return []
 }
 
-const registerBtn=(data)=>{
-  Service.Register.userRegister(data)
+const registerBtn=async (data,history)=>{
+ await Service.Register.userRegister(data)
       .then(res=>{
-        console.log(res)
+          message.success(res.data.message)
+          history.push('/')
+      })
+      .catch(err=>{
+          message.error(err.response.data.message)
       })
 }
 
 
 const RegisterPage=()=>{
-
+    let history = useHistory()
   return(
     <div className="register-wrapper">
       <h1 className="text-center">註冊</h1>
       <div className="sign-up">
-        <Form className="form-wrapper" onSubmit={(data)=>registerBtn(data)}>
+        <Form className="form-wrapper" onSubmit={(data)=>registerBtn(data,history)}>
           <TextInput name="username" label="帳號" placeholder="請輸入帳號" validators={[requiredValidator]} />
           <TextInput name="nickname" label="使用者名稱" placeholder="請輸入使用者名稱" />
           <TextInput name="password" type="password" label="密碼" placeholder="請輸入密碼" validators={[requiredValidator]} />

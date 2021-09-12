@@ -29,10 +29,10 @@ const Toast=({msg,type})=>{
 
 }
 
-const notification=props=>{
+const notification=(msg,type)=>{
     let div = document.createElement('div')
     document.body.append(div)
-    ReactDOM.render(<Toast msg={props} />, div)
+    ReactDOM.render(<Toast msg={msg} type={type} />, div)
 
     setTimeout(()=>{
         document.body.removeChild(div)
@@ -41,7 +41,7 @@ const notification=props=>{
 
 export default {
     success:(msg,type)=>notification(msg,type),
-    error:(msg)=>notification(msg)
+    error:(msg,type)=>notification(msg,type)
 }
 
 

@@ -34,7 +34,7 @@ const Header=props=>{
           </div>
         </div>
       </div>
-      <hr />
+      <hr className='border-b-1 border-black' />
     </div>
 
   )
