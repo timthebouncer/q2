@@ -17,21 +17,23 @@ const Modal=()=>{
     const nickNameBtn=()=>{
         Service.User.updateUsername({name:nickname},config)
             .then((res=>{
-                console.log(res.message)
-                message.success(res.message,'success')
+                message.success(res.data.message,'success')
                 removeModal()
             }))
+            .catch(err=>{
+                message.error(err.response.data.message,'error')
+            })
     }
 
     return(
-        <div className="modal-wrapper">
+        <div id="modalId" className="modal-wrapper">
                 <h1>使用者資料補全</h1>
                 <div>
                     <span>使用者名稱</span>
-                    <input value={nickname} onChange={(e)=>setNickname(e.target.value)} />
+                    <input className='border-2 border-black' value={nickname} onChange={(e)=>setNickname(e.target.value)} />
                 </div>
 
-                <button onClick={nickNameBtn}>確定</button>
+                <button className="bg-blue-400 p-1.5 rounded text-white" onClick={nickNameBtn}>確定</button>
         </div>
     )
 
@@ -44,8 +46,8 @@ const showModal=()=>{
         ReactDOM.render(<Modal/>, div)
 }
 const removeModal=()=>{
-    let a = document.querySelectorAll("div")[18]
-    document.body.removeChild(a)
+    let getModal = document.getElementById("modalId")
+    document.body.removeChild(getModal.parentNode)
     document.body.classList.remove('bg-gray-450')
 }
 

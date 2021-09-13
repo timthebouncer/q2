@@ -1,11 +1,9 @@
-import React,{useEffect,useState,createContext} from 'react'
+import React,{useEffect} from 'react'
 import Service from '../../../api/api'
 import modal from '../../../component/modal/modal'
 
 
 const IndexPage=()=>{
-
-
 
     let token =localStorage.getItem('token')
     useEffect(async ()=>{

@@ -49,6 +49,7 @@ const LoginPage=()=>{
             placeholder="請輸入帳號"
             label="帳號"
             validators={[requiredValidator]}
+            className={'ml-3 w-80'}
           />
           <TextInput
             name="password"
@@ -56,6 +57,7 @@ const LoginPage=()=>{
             placeholder="請輸入密碼"
             label="密碼"
             validators={[requiredValidator]}
+            className={'ml-3 w-80'}
           />
           <Link className="register-btn" to='/register'>註冊</Link>
           <button className="submit-btn" type="submit">

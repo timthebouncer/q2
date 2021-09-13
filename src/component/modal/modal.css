@@ -1,5 +1,5 @@
 .modal-wrapper{
-    @apply flex flex-col items-center justify-around absolute inset-80 bg-white h-56 w-96
+    @apply flex flex-col items-center justify-around absolute inset-1/3 bg-white h-56 w-96 ml-24
     /*top: 21%;*/
     /*left: 36%;*/
 }

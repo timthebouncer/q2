@@ -1,10 +1,9 @@
 import './App.css';
-import React,{useState,createContext, useEffect} from 'react'
+import React,{useState,createContext} from 'react'
 import router from "./route/route";
 import {Switch, Route, Link, Redirect, BrowserRouter as Router} from 'react-router-dom'
-import Service from './api/api'
 import Layout from '../src/component/Layout/layout'
-import axios from "axios";
+
 
 const AuthToken = createContext(null)
 function App() {

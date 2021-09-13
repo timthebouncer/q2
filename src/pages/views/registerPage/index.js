@@ -17,19 +17,21 @@ const requiredValidator=val=>{
   return []
 }
 
-const registerValidator=(val,formData)=>{
-  console.log(formData.username)
+const usernameValidator=(val,formData)=>{
 
   let pattern = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,8})$/
-  let pattern2 = /[A-z]+[0-9]+[A-z]$/
-
-  console.log(pattern.test(formData.username))
   if(!pattern.test(formData.username)){
-    return ['格式不符合']
-  }else if(!pattern2.test(formData.password) && (formData.password.length >=4 && formData.password.length<=8)){
     return ['格式不符合']
   }
   return []
+}
+
+const passwordValidator=(val,formData)=>{
+    let pattern2 = /^[A-z]+[0-9]+[A-z]/
+if(!pattern2.test(formData.password) && (!formData.password.length >=4 && !formData.password.length<=8)){
+        return ['格式不符合']
+    }
+return []
 }
 
 const passwordMatchedValidator = (val, formData) => {
@@ -44,11 +46,11 @@ const passwordMatchedValidator = (val, formData) => {
 const registerBtn=async (data,history)=>{
  await Service.Register.userRegister(data)
       .then(res=>{
-          message.success(res.data.message)
+          message.success(res.data.message,'success')
           history.push('/')
       })
       .catch(err=>{
-          message.error(err.response.data.message)
+          message.error(err.response.data.message,'error')
       })
 }
 
@@ -60,10 +62,10 @@ const RegisterPage=()=>{
       <h1 className="text-center">註冊</h1>
       <div className="sign-up">
         <Form className="form-wrapper" onSubmit={(data)=>registerBtn(data,history)}>
-            <TextInput className={'ml-3 w-80'} name="username" label="帳號" placeholder="必須是信箱" validators={[requiredValidator,registerValidator]} />
+            <TextInput className={'ml-3 w-80'} name="username" label="帳號" placeholder="必須是信箱" validators={[requiredValidator,usernameValidator]} />
             <TextInput className={'ml-3 w-80'} name="nickname" label="使用者名稱" placeholder="可選,對其他用戶顯示的名稱" />
             <TextInput className={'ml-3 w-80'} name="password" type="password" label="密碼" placeholder="4-8字元;首尾必須是英文;中間必須是數字"
-                       validators={[requiredValidator,registerValidator]} />
+                       validators={[requiredValidator,passwordValidator]} />
             <TextInput className={'ml-3 w-80'} name="passwordConfirmation" type="password" label="確認密碼" placeholder="4-8字元;首尾必須是英文;中間必須是數字"
                        validators={[requiredValidator,passwordMatchedValidator]} />
           <Link className="register-btn" to='/'>返回登入</Link>

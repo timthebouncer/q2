@@ -52,7 +52,6 @@ const TextInput = props => {
   };
 
   const togglePassword=(e,toggleEye)=>{
-      console.log(111)
       e.preventDefault()
       setToggleEye(!toggleEye)
       inputRef.current.type=toggleEye ? "text" : "password"
