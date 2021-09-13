@@ -6,23 +6,19 @@ import Service from './api/api'
 import Layout from '../src/component/Layout/layout'
 import axios from "axios";
 
-// const AuthToken = createContext(null)
-const GetUserInfo = createContext(null)
+const AuthToken = createContext(null)
 function App() {
-        const [userInfo, setUserInfo]=useState('')
-  // const[auth, setAuth] = useState(false)
-    let token =localStorage.getItem('token')
-    useEffect(()=>{
-        let config={
-           headers: {"Authorization" : `Bearer ${token}`}
-        }
-       Service.Auth.userAuth(config)
-           .then((res)=>{
-               console.log(res)
-               setUserInfo(res.data.data)
-           })
-    },[])
 
+  const[auth, setAuth] = useState(false)
+  const [userInfo, setUserInfo]=useState(null)
+
+  let token =localStorage.getItem('token')
+
+
+  let providerValue={
+    setAuth,
+    setUserInfo
+  }
 
   return (
 
@@ -33,21 +29,20 @@ function App() {
             return <Route exact={item.exact} path={item.path} key={i} render={(props)=>{
               if(!item.auth){
                 return(
-                //<AuthToken.Provider value={setAuth}>
+                <AuthToken.Provider value={providerValue}>
                 <item.component/>
-                //</AuthToken.Provider>
+                </AuthToken.Provider>
                 )
-              }else if(true){
+              }else if(token){
                 return (
-                    <GetUserInfo.Provider value={userInfo}>
-                        <Layout>
-                            <item.component/>
-                        </Layout>
-                    </GetUserInfo.Provider>
+                  <AuthToken.Provider value={providerValue}>
+                      <Layout>
+                          <item.component/>
+                      </Layout>
+                  </AuthToken.Provider>
                 )
-              }else {
-                return <Redirect to={'/404'} />
               }
+                return <Redirect to={'/404'} />
             }} />
           })
           }
@@ -60,5 +55,4 @@ function App() {
 }
 
 export default App;
-// export {AuthToken}
-export {GetUserInfo};
+export {AuthToken}

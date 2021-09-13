@@ -1,8 +1,12 @@
-import React,{useEffect} from 'react'
+import React,{useEffect,useState,createContext} from 'react'
 import Service from '../../../api/api'
 import modal from '../../../component/modal/modal'
 
+
 const IndexPage=()=>{
+
+
+
     let token =localStorage.getItem('token')
     useEffect(async ()=>{
 
@@ -11,7 +15,6 @@ const IndexPage=()=>{
             }
           await Service.Auth.userAuth(config)
                 .then((res)=>{
-                    // console.log(res)
                     if(!res.data.data.name){
                         modal.show()
                     }
@@ -19,11 +22,11 @@ const IndexPage=()=>{
     },[token])
 
   return(
-    <div className="index-wrapper">
-      首頁
-    </div>
-  )
+      <div className="index-wrapper">
+        首頁
+      </div>
 
+  )
 
 }
 

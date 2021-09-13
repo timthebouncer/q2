@@ -18,8 +18,8 @@ Auth:{
   }
 },
 Upload:{
-  userImg(){
-    return request.post('/users/uploadPicture')
+  userImg(formData,config){
+    return request.post('/users/uploadPicture',formData,config)
   }
 },
 User:{

@@ -58,21 +58,19 @@ const TextInput = props => {
       inputRef.current.type=toggleEye ? "text" : "password"
     }
 
-
-
   return (
     <div>
-      <label className="text-left">{props.label}</label>
+      <label className={props.label.length <=3  ? 'ml-12' : (props.label.length ===4?'ml-5':'')}>{props.label}</label>
       <input
         name={props.name}
         type={props.type}
-        className={`${props.name}` === 'password_confirmation' ? 'mr-7 ml-5' : 'ml-5'}
+        className={`${props.className} form-control`}
         placeholder={props.placeholder}
         onChange={onChange}
         value={props.value}
         ref={inputRef}
       />
-      <div onClick={(e)=>togglePassword(e,toggleEye)} className={'relative -top-6 left-48'}>
+      <div onClick={(e)=>togglePassword(e,toggleEye)} className={'relative -top-6 left-96'}>
         {props.type==='password'?suffix(toggleEye):''}
       </div>
 
