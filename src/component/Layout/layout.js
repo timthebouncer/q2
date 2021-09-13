@@ -6,7 +6,7 @@ import Service from '../../api/api'
 
 
 const Layout=(props)=>{
-
+  const {userInfo}=props
  //  const {setAuth} = useContext(AuthToken)
  //  let token =localStorage.getItem('token')
  //
@@ -31,7 +31,7 @@ const Layout=(props)=>{
     <Header switchMenu={switchMenu} setSwitchMenu={setSwitchMenu} />
     <div className="flex">
       <div className="border-r-2 border-black">
-        <NavBar switchMenu={switchMenu} />
+        <NavBar switchMenu={switchMenu} userInfo={userInfo} />
       </div>
       <div className="component-wrapper w-full">
         {props.children}

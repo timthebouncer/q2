@@ -35,8 +35,8 @@ function App() {
               }else if(token){
                 return (
                   <AuthToken.Provider value={providerValue}>
-                      <Layout>
-                          <item.component/>
+                      <Layout userInfo={userInfo}>
+                          <item.component />
                       </Layout>
                   </AuthToken.Provider>
                 )

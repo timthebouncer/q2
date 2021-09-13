@@ -12,6 +12,7 @@ export const SidebarData =[
   {
     name:'會員管理',
     path:'/user',
+    role:'ADMIN',
     component:UserManagement
   }
 
