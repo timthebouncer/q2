@@ -1,10 +1,10 @@
 import React from 'react'
 import {Link} from "react-router-dom";
-import Form from "../../../component/form";
-import TextInput from "../../../component/form/input";
+import Form from "@/component/form";
+import TextInput from "@/component/form/input";
 import './register.css'
-import Service from '../../../api/api'
-import message from '../../../component/toast/toast'
+import Service from '@/api/api'
+import message from '@/component/toast/toast'
 import { useHistory } from "react-router-dom";
 
 

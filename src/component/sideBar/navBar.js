@@ -2,21 +2,22 @@ import React from 'react'
 import {SidebarData} from './sideBarData'
 import {Link, Route} from 'react-router-dom'
 import './sidebar.css'
-import show from "../tooltip/tooltip";
+import show from "@/component/tooltip/tooltip";
 
 const NavBar=({switchMenu, userInfo})=>{
 
   const tooltip=(e,name)=>{
-    console.log(e,name)
-    let position={
-      x:e.clientX,
-      y:e.clientY
-    }
+    e.preventDefault()
     if(switchMenu){
-      show.toolTip(position,name)
+      show.toolTip(e.type,name)
     }
 
-
+  }
+  const closeToolTip=(e)=>{
+    e.preventDefault()
+    if(switchMenu){
+      show.toolTip(e.type)
+    }
   }
 
   return(
@@ -27,10 +28,10 @@ const NavBar=({switchMenu, userInfo})=>{
               <Route render={()=>{
                 if(!item.role){
                   return(
-                  <li className="sidebar-items" key={index} onMouseOver={(e)=>tooltip(e,item.name)}>
+                  <li className="sidebar-items" key={index}>
                   <Link className="flex" to={item.path} >
-                  <span className='mr-4'>
-                    <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <span onMouseEnter={(e)=>tooltip(e,item.name)} className='mr-4'>
+                    <svg onMouseLeave={(e)=>closeToolTip(e)} xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
                   </span>

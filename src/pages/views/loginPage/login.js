@@ -4,9 +4,10 @@ import TextInput from "../../../component/form/input";
 import './index.css'
 import Service from '../../../api/api'
 import {Link} from "react-router-dom";
-import {AuthToken} from "../../../App";
+import {AuthToken} from "@/App";
 import { useHistory } from "react-router-dom";
-import message from '../../../component/toast/toast'
+// import message from '../../../component/toast/toast'
+import message from '@/component/toast/toast'
 
 
 const requiredValidator=val=>{

@@ -1,6 +1,6 @@
 import React,{useState,useRef} from "react";
 import { isEmpty } from "lodash";
-import withForm from "../../component/form/withForm";
+import withForm from "@/component/form/withForm";
 import './index.css'
 
 
