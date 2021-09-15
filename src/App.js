@@ -1,51 +1,33 @@
 import './App.css';
-import React,{useState,createContext} from 'react'
+import React,{useState} from 'react'
+import { createContext } from 'use-context-selector';
 import router from "./route/route";
-import {Switch, Route, Link, Redirect, BrowserRouter as Router} from 'react-router-dom'
-import Layout from '../src/component/Layout/layout'
+import {Switch, Route, Redirect, BrowserRouter as Router} from 'react-router-dom'
+const authContext = createContext(null)
 
-
-const AuthToken = createContext(null)
 function App() {
 
-  const[auth, setAuth] = useState(false)
-  const [userInfo, setUserInfo]=useState(null)
-
-  let token =localStorage.getItem('token')
-
-
-  let providerValue={
-    setAuth,
-    setUserInfo
+  const AuthProvider =({children})=>{
+    const [userData, setUserData] = useState(null)
+    return(
+      <authContext.Provider value={{userData, setUserData}}>
+        {children}
+      </authContext.Provider>
+    )
   }
+
 
   return (
 
     <Router>
       <div className='app-wrapper'>
         <Switch>
-          {router.map((item, i) => {
-            return <Route exact={item.exact} path={item.path} key={i} render={(props)=>{
-              if(!item.auth){
-                return(
-                <AuthToken.Provider value={providerValue}>
-                <item.component/>
-                </AuthToken.Provider>
-                )
-              }else if(token){
-                return (
-                  <AuthToken.Provider value={providerValue}>
-                      <Layout userInfo={userInfo}>
-                          <item.component />
-                      </Layout>
-                  </AuthToken.Provider>
-                )
-              }
-                return <Redirect to={'/404'} />
-            }} />
-          })
-          }
-
+          <AuthProvider>
+            {router.map((item, i) => {
+              return <Route key={i} {...item} exact={item.exact} />
+            })
+            }
+          </AuthProvider>
         </Switch>
       </div>
     </Router>
@@ -54,4 +36,4 @@ function App() {
 }
 
 export default App;
-export {AuthToken}
+export {authContext}

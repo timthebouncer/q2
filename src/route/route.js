@@ -6,6 +6,7 @@ import Index from "../pages/views/indexPage/index"
 import NotFound from "../pages/views/notFoundPage/index"
 import UserInfo from "../pages/views/userInfo";
 import UserManagement from "../pages/views/userManagement";
+import Layout from "@/component/Layout/layout";
 
 const router=[
   {
@@ -22,24 +23,20 @@ const router=[
   {
     path: "/index",
     name: "Index",
-    auth:'true',
-    component: Index,
+    component:()=><Layout><Index /></Layout>,
   },
   {
     name:'個人資訊管理',
     path:'/userInfo',
-    auth:'true',
-    component:UserInfo
+    component:()=><Layout><UserInfo /></Layout>
   },
   {
     name:'會員管理',
     path:'/user',
-    auth:'true',
     component:UserManagement
   },
   {
-    path:'/404',
-    name:'NotFound',
+    path:'*',
     component:NotFound
   }
 ]

@@ -1,8 +1,9 @@
 import React,{useContext,useEffect,useState} from 'react'
 import Service from '../../../api/api'
 import message from "../../../component/toast/toast";
-import {GetUserInfo} from "../../../App";
+import {authContext, GetUserInfo} from "../../../App";
 import modal from "../../../component/modal/modal";
+import {useContextSelector} from "use-context-selector";
 
 async function handleUpload(e,avatar,setAvatar) {
     await uploadFile(e.target.files[0],avatar,setAvatar);
@@ -30,6 +31,8 @@ function uploadFile(fileObj,avatar,setAvatar) {
 }
 
 const UserInfo=()=>{
+    const [userData, setUserData]= useContextSelector(authContext,e=>[e.userData, e.setUserData])
+
     const [avatar,setAvatar] = useState('')
     const [getUser, setGetUser] = useState(null)
 

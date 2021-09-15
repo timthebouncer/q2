@@ -4,7 +4,7 @@ import {Link, Route} from 'react-router-dom'
 import './sidebar.css'
 import show from "@/component/tooltip/tooltip";
 
-const NavBar=({switchMenu, userInfo})=>{
+const NavBar=({switchMenu, userData})=>{
 
   const tooltip=(e,name)=>{
     e.preventDefault()
@@ -40,7 +40,7 @@ const NavBar=({switchMenu, userInfo})=>{
                         }
                   </Link>
                   </li>)
-                }else if(userInfo && userInfo.role === item.role){
+                }else if(userData && userData.role === item.role){
                       return (
                           <li className="sidebar-items" key={index}>
                             <Link className="flex" to={item.path}>

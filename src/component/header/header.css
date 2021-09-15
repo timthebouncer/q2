@@ -7,3 +7,6 @@
 .right-section{
     @apply flex
 }
+.avatar{
+    @apply w-8
+}

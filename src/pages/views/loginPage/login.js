@@ -4,9 +4,7 @@ import TextInput from "../../../component/form/input";
 import './index.css'
 import Service from '../../../api/api'
 import {Link} from "react-router-dom";
-import {AuthToken} from "@/App";
 import { useHistory } from "react-router-dom";
-// import message from '../../../component/toast/toast'
 import message from '@/component/toast/toast'
 
 
@@ -20,19 +18,17 @@ const requiredValidator=val=>{
 
 
 const LoginPage=()=>{
-  const {setAuth,setUserInfo} = useContext(AuthToken)
 
   const history = useHistory()
 
   const loginFun=async(data)=>{
     await Service.Login.userLogin(data)
       .then((res)=>{
-        setAuth(res.data.success)
-        setUserInfo(res.data.data)
         localStorage.setItem('token', res.data.token)
-
         message.success(res.data.message,'success')
-        history.push('/index')
+        if(res.data.data){
+          history.push('/index')
+        }
       })
         .catch((err)=>{
             message.error(err.response.data.message,'error')
