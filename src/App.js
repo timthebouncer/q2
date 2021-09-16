@@ -1,10 +1,12 @@
 import './App.css';
-import React,{useState} from 'react'
+import React,{useState, Suspense} from 'react'
 import { createContext } from 'use-context-selector';
-import router from "./route/route";
+import routes from "./route/route";
 import {Switch, Route, Redirect, BrowserRouter as Router} from 'react-router-dom'
-const authContext = createContext(null)
 
+
+
+const authContext = createContext(null)
 function App() {
 
   const AuthProvider =({children})=>{
@@ -18,20 +20,21 @@ function App() {
 
 
   return (
-
+    <AuthProvider>
     <Router>
       <div className='app-wrapper'>
+        <Suspense fallback={"Loading..."}>
         <Switch>
-          <AuthProvider>
-            {router.map((item, i) => {
-              return <Route key={i} {...item} exact={item.exact} />
-            })
-            }
-          </AuthProvider>
+            {routes.map((item, i) => {
+              return(
+                <Route key={i} {...item} path={item.path} exact={item.exact} />
+              )
+            })}
         </Switch>
+        </Suspense>
       </div>
     </Router>
-
+    </AuthProvider>
   );
 }
 

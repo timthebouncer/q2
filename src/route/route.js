@@ -1,24 +1,27 @@
 import React, {lazy, Suspense} from "react";
 
-import Login from "../pages/views/loginPage/login"
-import Register from "../pages/views/registerPage/index"
-import Index from "../pages/views/indexPage/index"
-import NotFound from "../pages/views/notFoundPage/index"
-import UserInfo from "../pages/views/userInfo";
-import UserManagement from "../pages/views/userManagement";
-import Layout from "@/component/Layout/layout";
 
-const router=[
+import Layout from "@/component/Layout/layout";
+import NotFound from "../pages/views/notFoundPage/index"
+
+const Login = lazy(()=>import('@/pages/views/loginPage/login'))
+const Register = lazy(()=>import('@/pages/views/registerPage/index'))
+const Index = lazy(()=>import('@/pages/views/indexPage/index'))
+const UserInfo = lazy(()=>import('@/pages/views/userInfo'))
+const UserManagement = lazy(()=>import('@/pages/views/userManagement'))
+
+
+const routes=[
   {
     path: "/",
     name: "Login",
     exact:true,
-    component: Login,
+    component:Login
   },
   {
     path: "/register",
     name: 'Register',
-    component: Register
+    component:Register
   },
   {
     path: "/index",
@@ -33,7 +36,7 @@ const router=[
   {
     name:'會員管理',
     path:'/user',
-    component:UserManagement
+    component:()=><Layout><UserManagement /></Layout>
   },
   {
     path:'*',
@@ -41,4 +44,4 @@ const router=[
   }
 ]
 
-export default router
+export default routes
