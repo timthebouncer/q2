@@ -6,8 +6,9 @@ export const SidebarData =[
   {
     name:'個人資訊管理',
     path:'/userInfo',
-    icon:'user',
-    component:UserInfo
+    component:UserInfo,
+    children:{path:'/account',name:'帳戶管理'}
+
   },
   {
     name:'會員管理',

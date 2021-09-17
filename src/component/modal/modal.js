@@ -1,7 +1,7 @@
 import React,{useState} from 'react'
 import ReactDOM from 'react-dom'
 import './modal.css'
-import Service from '../../api/api'
+import service from '../../api/api'
 import message from '../toast/toast'
 
 
@@ -15,7 +15,7 @@ const Modal=()=>{
     }
 
     const nickNameBtn=()=>{
-        Service.User.updateUsername({name:nickname},config)
+      service.User.updateUsername({name:nickname},config)
             .then((res=>{
                 message.success(res.data.message,'success')
                 removeModal()

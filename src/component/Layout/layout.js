@@ -1,7 +1,7 @@
 import React,{useState,useEffect,useContext} from 'react'
 import NavBar from '../sideBar/navBar'
 import Header from '../header/header'
-import Service from '../../api/api'
+import service from '../../api/api'
 import {authContext} from '@/App'
 import {useContextSelector} from "use-context-selector";
 
@@ -20,7 +20,7 @@ const Layout=(props)=>{
 
     const {success, data} = await new Promise(response =>
       setTimeout(()=>{
-        Service.Auth.userAuth(config)
+        service.Auth.userAuth(config)
           .then((res)=>{
             response({success:true, data:res.data.data})
           })

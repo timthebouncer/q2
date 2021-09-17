@@ -1,5 +1,5 @@
 import React,{useEffect} from 'react'
-import Service from '../../../api/api'
+import service from '../../../api/api'
 import modal from '../../../component/modal/modal'
 
 
@@ -11,7 +11,7 @@ const IndexPage=()=>{
             let config={
                 headers: {"Authorization" : `Bearer ${token}`}
             }
-          await Service.Auth.userAuth(config)
+          await service.Auth.userAuth(config)
                 .then((res)=>{
                     if(!res.data.data.name){
                         modal.show()

@@ -3,7 +3,7 @@ import {Link} from "react-router-dom";
 import Form from "@/component/form";
 import TextInput from "@/component/form/input";
 import './register.css'
-import Service from '@/api/api'
+import service from '@/api/api'
 import message from '@/component/toast/toast'
 import { useHistory } from "react-router-dom";
 
@@ -44,7 +44,7 @@ const passwordMatchedValidator = (val, formData) => {
 
 
 const registerBtn=async (data,history)=>{
- await Service.Register.userRegister(data)
+ await service.Register.userRegister(data)
       .then(res=>{
           message.success(res.data.message,'success')
           history.push('/')

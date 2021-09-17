@@ -2,7 +2,7 @@ import React,{useContext,useEffect} from 'react'
 import Form from "../../../component/form";
 import TextInput from "../../../component/form/input";
 import './index.css'
-import Service from '../../../api/api'
+import service from '../../../api/api'
 import {Link} from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import message from '@/component/toast/toast'
@@ -22,7 +22,7 @@ const LoginPage=()=>{
   const history = useHistory()
 
   const loginFun=async(data)=>{
-    await Service.Login.userLogin(data)
+    await service.Login.userLogin(data)
       .then((res)=>{
         localStorage.setItem('token', res.data.token)
         message.success(res.data.message,'success')

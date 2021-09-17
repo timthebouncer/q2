@@ -3,57 +3,53 @@ import {SidebarData} from './sideBarData'
 import {Link, Route} from 'react-router-dom'
 import './sidebar.css'
 import {userIcon} from '@/Icon/svg'
-import show from "@/component/tooltip/tooltip";
-import tooltip from "@/component/tooltip/tooltip";
+import ToolTip from "@/component/tooltip/tooltip";
 
 const NavBar=({switchMenu, userData})=>{
 
-  const tooltip=(e,name)=>{
-    console.log(e)
-    if(switchMenu){
-      let element = e.target.getBoundingClientRect()
-      show.toolTip(e.type,name,e)
-    }
-  }
-  // const closeToolTip=(e)=>{
-  //   e.preventDefault()
-  //   if(switchMenu){
-  //     show.toolTip(e.type)
-  //   }
-  // }
 
   return(
     <div className={switchMenu===false? "w-44 h-screen p-4":"w-11 h-screen p-4"} >
       {
         SidebarData.map((item,index)=>{
           return(
-              <Route render={()=>{
-                if(!item.role){
+              <Route key={index} render={()=>{
+                if(userData || userData.role === item.role){
                   return(
-                  <li className="sidebar-items" key={index}>
-                  <Link className="flex" to={item.path} >
-                  <span className='mr-4' onMouseEnter={e=> tooltip(e,item.name)}>
-                  {userIcon}
-                  </span>
+                  <>
+                    <li className="sidebar-items" key={index}>
+                      <Link className="flex" to={item.path} >
                         {
-                          switchMenu===false? <span>{item.name}</span>:<span className={'opacity-0'}>{item.name}</span>
+                          switchMenu===false? <><span className={'mr-4'}>{userIcon}</span> <span>{item.name}</span></>:<>
+                            <ToolTip text={item.name}>
+                               <span className={"m-0 h-8"}>
+                                  {userIcon}
+                                </span>
+                            </ToolTip>
+                            <span className={'opacity-0'}>{item.name}</span>
+                          </>
                         }
-                  </Link>
-                  </li>)
-                }else if(userData && userData.role === item.role){
-                      return (
-                          <li className="sidebar-items" key={index}>
-                            <Link className="flex" to={item.path}>
-                              <span className='mr-4'>
-                                {userIcon}
-                              </span>
-                              {
-                                switchMenu===false? <span>{item.name}</span>:<span></span>
-                              }
-                            </Link>
-                          </li>
-                      )
-                    }
+                      </Link>
+                    </li>
+                  </>
+                  )
+                }
+                // else if(userData && userData.role === item.role){
+                //       return (
+                //           <li className="sidebar-items" key={index}>
+                //             <Link className="flex" to={item.path}>
+                //               <ToolTip text={item.name}>
+                //               <span className='mr-4'>
+                //                 {userIcon}
+                //               </span>
+                //               </ToolTip>
+                //               {
+                //                 switchMenu===false? <span>{item.name}</span>:<span></span>
+                //               }
+                //             </Link>
+                //           </li>
+                //       )
+                //     }
               }} />
           )
         })

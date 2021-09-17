@@ -20,10 +20,11 @@ function App() {
 
 
   return (
-    <AuthProvider>
+
     <Router>
       <div className='app-wrapper'>
         <Suspense fallback={"Loading..."}>
+          <AuthProvider>
         <Switch>
             {routes.map((item, i) => {
               return(
@@ -31,10 +32,11 @@ function App() {
               )
             })}
         </Switch>
+          </AuthProvider>
         </Suspense>
       </div>
     </Router>
-    </AuthProvider>
+
   );
 }
 
