@@ -1,20 +1,15 @@
 import React from 'react'
-import UserInfo from "../../pages/views/userInfo";
-import UserManagement from "../../pages/views/userManagement";
+
 
 export const SidebarData =[
   {
     name:'個人資訊管理',
-    path:'/userInfo',
-    component:UserInfo,
-    children:{path:'/account',name:'帳戶管理'}
-
+    routes:[{path:'/account/profile-setting',name:'帳戶管理'}]
   },
   {
     name:'會員管理',
-    path:'/user',
     role:'ADMIN',
-    component:UserManagement
+    routes:[{path:'/user/list',name:'列表式'},{path:'/user/form',name:'表格式'}]
   }
 
 

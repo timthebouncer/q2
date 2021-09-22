@@ -1,4 +1,4 @@
-import React,{useState,useEffect,useContext} from 'react'
+import React,{useState,useEffect} from 'react'
 import NavBar from '../sideBar/navBar'
 import Header from '../header/header'
 import service from '../../api/api'

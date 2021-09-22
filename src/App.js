@@ -11,8 +11,9 @@ function App() {
 
   const AuthProvider =({children})=>{
     const [userData, setUserData] = useState(null)
+    const [token, setToken] = useState(null)
     return(
-      <authContext.Provider value={{userData, setUserData}}>
+      <authContext.Provider value={{userData, setUserData, token,setToken}}>
         {children}
       </authContext.Provider>
     )
@@ -28,7 +29,15 @@ function App() {
         <Switch>
             {routes.map((item, i) => {
               return(
-                <Route key={i} {...item} path={item.path} exact={item.exact} />
+                <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
+                  return item.routes.map((route,idx)=>{
+                    return(
+                      <Switch>
+                        <Route key={idx} path={route.path} component={route.component} />
+                      </Switch>
+                    )
+                  })
+                }:item.component} />
               )
             })}
         </Switch>

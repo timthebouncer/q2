@@ -3,6 +3,7 @@ import service from '@/api/api'
 import message from "@/component/toast/toast";
 import {authContext} from "@/App";
 import {useContextSelector} from "use-context-selector";
+import {Switch} from 'react-router-dom'
 
 
 
@@ -30,34 +31,45 @@ function uploadFile(fileObj,userData,setUserData) {
       })
 }
 
-const UserInfo=()=>{
-    const [userData, setUserData]= useContextSelector(authContext,e=>[e.userData, e.setUserData])
+const Profile=()=>{
+  const [userData, setUserData]= useContextSelector(authContext,e=>[e.userData, e.setUserData])
 
   return(
     <div>
       帳戶設定
-        <div>
-          {
-              <img src={userData && userData.imgLink ?userData.imgLink:'https://via.placeholder.com/300x300/efefef?text=Avatar'}
-                   alt="image-placeholder"
-              className="img-thumbnail w-40" data-target="image-preview" />
-          }
-        </div>
-        <div>
-            {
-              userData?<span>{userData.name}({userData.username})</span>:<span>Loading...</span>
-            }
-        </div>
-        <div>
-            <label>
-                <input type="file" id="file-uploader" className={'hidden'} accept="image/*"
-                       onChange={(e)=>handleUpload(e,userData,setUserData)}
-                />
-                <span className={'bg-blue-500 p-3.5 rounded text-white absolute cursor-pointer'}>上傳圖片</span>
-            </label>
+      <div>
+        {
+          <img src={userData && userData.imgLink ?userData.imgLink:'https://via.placeholder.com/300x300/efefef?text=Avatar'}
+               alt="image-placeholder"
+               className="img-thumbnail w-40" data-target="image-preview" />
+        }
+      </div>
+      <div>
+        {
+          userData?<span>{userData.name}({userData.username})</span>:<span>Loading...</span>
+        }
+      </div>
+      <div>
+        <label>
+          <input type="file" id="file-uploader" className={'hidden'} accept="image/*"
+                 onChange={(e)=>handleUpload(e,userData,setUserData)}
+          />
+          <span className={'bg-blue-500 p-3.5 rounded text-white absolute cursor-pointer'}>上傳圖片</span>
+        </label>
 
-        </div>
+      </div>
     </div>
   )
+}
+
+
+const UserInfo=()=>{
+
+  return(
+      <Switch>
+        <Profile />
+      </Switch>
+    )
+
 }
 export default UserInfo

@@ -27,7 +27,7 @@ service.interceptors.response.use(
   function(error) {
     const {status} = error.response
     if(status === 403 || status === 401)
-      window.history.go(router[0].path)
+      // window.history.go(router[0].path)
 
     return Promise.reject(error);
   }

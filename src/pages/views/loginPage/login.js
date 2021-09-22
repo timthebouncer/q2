@@ -6,6 +6,8 @@ import service from '../../../api/api'
 import {Link} from "react-router-dom";
 import { useHistory } from "react-router-dom";
 import message from '@/component/toast/toast'
+import {authContext} from '@/App'
+import {useContextSelector} from "use-context-selector";
 
 
 const requiredValidator=val=>{
@@ -20,11 +22,13 @@ const requiredValidator=val=>{
 const LoginPage=()=>{
 
   const history = useHistory()
+  const [setToken]= useContextSelector(authContext,e=>[e.setToken])
 
   const loginFun=async(data)=>{
     await service.Login.userLogin(data)
       .then((res)=>{
         localStorage.setItem('token', res.data.token)
+        setToken(res.data.token)
         message.success(res.data.message,'success')
         if(res.data.data){
           history.push('/index')

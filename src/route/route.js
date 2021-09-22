@@ -8,7 +8,8 @@ const Login = lazy(()=>import('@/pages/views/loginPage/login'))
 const Register = lazy(()=>import('@/pages/views/registerPage/index'))
 const Index = lazy(()=>import('@/pages/views/indexPage/index'))
 const UserInfo = lazy(()=>import('@/pages/views/userInfo'))
-const UserManagement = lazy(()=>import('@/pages/views/userManagement'))
+const List = lazy(()=>import('@/pages/views/userManagement/index'))
+const FormList = lazy(()=>import('@/pages/views/userManagement/formList'))
 
 
 const routes=[
@@ -30,13 +31,30 @@ const routes=[
   },
   {
     name:'個人資訊管理',
-    path:'/userInfo',
-    component:()=><Layout><UserInfo /></Layout>
+    path:'/account',
+    routes:[
+      {
+        path:'/account/profile-setting',
+        name:'帳戶設定',
+        component:()=><Layout><UserInfo /></Layout>
+      }
+    ]
   },
   {
     name:'會員管理',
-    path:'/user',
-    component:()=><Layout><UserManagement /></Layout>
+    path: '/user',
+    routes:[
+      {
+        path:'/user/list',
+        name:'列表式',
+        component:()=><Layout><List /></Layout>
+      },
+      {
+        path:'/user/form',
+        name:'表格式',
+        component:()=><Layout><FormList /></Layout>
+      },
+    ]
   },
   {
     path:'*',

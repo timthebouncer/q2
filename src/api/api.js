@@ -25,6 +25,9 @@ Upload:{
 User:{
   updateUsername(data,config){
     return request.put('/users/updateName',data,config)
+  },
+  getList(config){
+    return request.get('/users?', config)
   }
 }
 
