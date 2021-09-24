@@ -1,9 +1,12 @@
 import {Link} from "react-router-dom";
-import React from "react";
-import {userIcon, chevronDown} from '@/Icon/svg'
+import React, {useState} from "react";
+import {userIcon, chevronDown, chevronUp} from '@/Icon/svg'
 import ToolTip from "@/component/tooltip/tooltip";
 
 function RouteWithSubRoutes({item,index,switchMenu}) {
+
+  const [direction, setDirection] = useState(true)
+
   return (
     <>
         <ul className="sidebar-items" key={index}>
@@ -17,13 +20,19 @@ function RouteWithSubRoutes({item,index,switchMenu}) {
                 </ToolTip>
               </>
             }
-            <i className={'mt-1.5'}>{chevronDown}</i>
+            {direction ? <i onClick={()=>setDirection(false)} className={'mt-1.5'}>{chevronDown}</i> :
+              <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
+            }
           </li>
             {item.routes.map((item, i) => {
               return(
-                <Link key={i} to={item.path} className={'flex justify-center mb-3'}>
-                  {item.name}
-                </Link>
+                <>
+                  {
+                  direction ? <Link key={i} to={item.path} className={'flex justify-center mb-3'}>
+                    {item.name}
+                  </Link>:''
+                }
+                </>
               )
             })}
         </ul>
