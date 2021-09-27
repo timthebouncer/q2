@@ -24,8 +24,7 @@ const FormList=()=>{
     if(userList.length === 0){
       service.User.getList(config)
         .then(res=>{
-          // console.log(res.data.)
-          setTotalPage(res.data.total)
+          setTotalPage(res.data.data.total)
           // (this.newCurrent - 1) * this.newPageSize + index)
           setUserList(res.data.data.content)
           setLoading(false)
