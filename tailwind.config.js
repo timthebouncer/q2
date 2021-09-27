@@ -10,7 +10,10 @@ module.exports = {
         gray: {
           450: '#7F7F7F'
         },
-      }
+      },
+      flexGrow:{
+        'custom':0.1
+      },
     },
   },
   variants: {

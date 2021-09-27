@@ -10,6 +10,7 @@ const Index = lazy(()=>import('@/pages/views/indexPage/index'))
 const UserInfo = lazy(()=>import('@/pages/views/userInfo'))
 const List = lazy(()=>import('@/pages/views/userManagement/index'))
 const FormList = lazy(()=>import('@/pages/views/userManagement/formList'))
+const UserDetail = lazy(()=>import('@/pages/views/userManagement/userDetail'))
 
 
 const routes=[
@@ -47,13 +48,18 @@ const routes=[
       {
         path:'/user/list',
         name:'列表式',
-        component:()=><Layout><List /></Layout>
+        component:()=><Layout><List /></Layout>,
       },
       {
         path:'/user/form',
         name:'表格式',
         component:()=><Layout><FormList /></Layout>
       },
+      {
+        path:'/user/userDetail',
+        name:'會員詳情',
+        component:(props)=><Layout><UserDetail props={props} /></Layout>,
+      }
     ]
   },
   {

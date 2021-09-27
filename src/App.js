@@ -7,6 +7,8 @@ import {Switch, Route, Redirect, BrowserRouter as Router} from 'react-router-dom
 
 
 const authContext = createContext(null)
+const userListContext = createContext(null)
+
 function App() {
 
   const AuthProvider =({children})=>{
@@ -19,6 +21,16 @@ function App() {
     )
   }
 
+  const UserListProvider = ({children})=>{
+    const [userList, setUserList] = useState([])
+    const [totalPage, setTotalPage] = useState(0)
+    return(
+      <userListContext.Provider value={{userList,setUserList,totalPage, setTotalPage}}>
+        {children}
+      </userListContext.Provider>
+    )
+  }
+
 
   return (
 
@@ -26,21 +38,23 @@ function App() {
       <div className='app-wrapper'>
         <Suspense fallback={"Loading..."}>
           <AuthProvider>
-        <Switch>
-            {routes.map((item, i) => {
-              return(
-                <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
-                  return item.routes.map((route,idx)=>{
+            <UserListProvider>
+              <Switch>
+                  {routes.map((item, i) => {
                     return(
-                      <Switch>
-                        <Route key={idx} path={route.path} component={route.component} />
-                      </Switch>
+                      <Route key={i} {...item} path={item.path} exact={item.exact} component={item.routes? ()=>{
+                        return item.routes.map((route,idx)=>{
+                          return(
+                            <Switch>
+                                <Route key={idx} path={route.path} component={route.component} />
+                            </Switch>
+                          )
+                        })
+                      }:item.component} />
                     )
-                  })
-                }:item.component} />
-              )
-            })}
-        </Switch>
+                  })}
+              </Switch>
+            </UserListProvider>
           </AuthProvider>
         </Suspense>
       </div>
@@ -50,4 +64,4 @@ function App() {
 }
 
 export default App;
-export {authContext}
+export {authContext,userListContext}
