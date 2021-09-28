@@ -9,31 +9,35 @@ const FormList=()=>{
 
   const [userList, setUserList,totalPage, setTotalPage] = useContextSelector(userListContext,e=>[e.userList,e.setUserList,e.totalPage, e.setTotalPage])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrent] = useState(0)
+
 
   let token =localStorage.getItem('token')
-  let config={
-    headers: {"Authorization" : `Bearer ${token}`},
-    params:{
-      page: 0,
-      size: 10
+
+
+  const getUserList=()=>{
+    let config={
+      headers: {"Authorization" : `Bearer ${token}`},
+      params:{
+        page: currentPage,
+        size: 10
+      }
     }
+
+    service.User.getList(config)
+      .then(res=>{
+        setTotalPage(res.data.data.total)
+        // (this.newCurrent - 1) * this.newPageSize + index)
+        setUserList(res.data.data.content)
+        setLoading(false)
+      })
+
+
   }
-
-
   useEffect(()=>{
-    if(userList.length === 0){
-      service.User.getList(config)
-        .then(res=>{
-          setTotalPage(res.data.data.total)
-          // (this.newCurrent - 1) * this.newPageSize + index)
-          setUserList(res.data.data.content)
-          setLoading(false)
-        })
-    }else {
-      setLoading(false)
-    }
+    getUserList()
+  },[currentPage])
 
-  },[setUserList])
 
   if(loading)return '載入中....'
 
@@ -73,7 +77,7 @@ const FormList=()=>{
         </div>
       </section>
       <footer className={'text-center p-5 flex-grow-custom'}>
-        <Pagination totalPage={totalPage} />
+        <Pagination totalPage={totalPage} currentPage={currentPage} setCurrent={setCurrent} />
       </footer>
     </div>
   )

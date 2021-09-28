@@ -1,40 +1,39 @@
 import React from 'react'
+import Pages from './pages'
 
-const Pagination=({totalPage})=>{
 
-  let currentPage = 1;
+const Pagination=({totalPage,currentPage,setCurrent})=>{
+
+
     let total = 0;
 
     if(totalPage.length%10 !== 0){
-        total = totalPage/10 + 1
+        total = Math.floor(totalPage/10) + 1
     }else {
-        total = totalPage/10
+        total = Math.floor(totalPage/10)
     }
 
 
-  const Pages=()=>{
-  let pages =[];
 
-    const pageClick=()=>{
 
+    const pageLeft=()=>{
+      if(currentPage === 0)return
+      setCurrent(currentPage-1)
     }
-
-
-      for (let i = 1; i <= total; i++) {
-          pages.push(<li key={i} onClick={pageClick} className={`${currentPage} === i? bg-blue-200:'' list-none px-3 border-2 border-black`}>{i}</li>)
-      }
-      return pages
-  }
-
-
+    const pageRight=async ()=>{
+      if(currentPage === total)return
+      await setCurrent(currentPage+1)
+      console.log(currentPage,888);
+      console.log(total,999);
+    }
 
 
 
   return(
     <div className={'flex justify-center'}>
-      <button>{'<'}</button>
-        <Pages />
-      <button>{'>'}</button>
+      <button onClick={pageLeft}>{'<'}</button>
+        <Pages total={total} currentPage={currentPage}/>
+      <button onClick={pageRight}>{'>'}</button>
     </div>
   )
 }
