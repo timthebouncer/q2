@@ -16,24 +16,11 @@ const Pagination=({totalPage,currentPage,setCurrent})=>{
 
 
 
-    const pageLeft=()=>{
-      if(currentPage === 0)return
-      setCurrent(currentPage-1)
-    }
-    const pageRight=async ()=>{
-      if(currentPage === total)return
-      await setCurrent(currentPage+1)
-      console.log(currentPage,888);
-      console.log(total,999);
-    }
-
 
 
   return(
     <div className={'flex justify-center'}>
-      <button onClick={pageLeft}>{'<'}</button>
-        <Pages total={total} currentPage={currentPage}/>
-      <button onClick={pageRight}>{'>'}</button>
+        <Pages total={total} currentPage={currentPage} setCurrent={setCurrent}/>
     </div>
   )
 }

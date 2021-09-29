@@ -5,31 +5,58 @@ import {userListContext} from '@/App'
 import {useContextSelector} from "use-context-selector";
 
 const UserManagement=()=>{
-  const [userList, setUserList] = useContextSelector(userListContext,e=>[e.userList,e.setUserList])
+  const [userList, setUserList,totalPage, setTotalPage] = useContextSelector(userListContext,e=>[e.userList,e.setUserList,e.totalPage, e.setTotalPage])
   const [loading, setLoading] = useState(true)
+  const [currentPage, setCurrent] = useState(0)
 
+  let total = 0;
   let token =localStorage.getItem('token')
-  let config={
-    headers: {"Authorization" : `Bearer ${token}`},
-    params:{
-      page: 0,
-      size: 10
+
+  const getUserList=()=>{
+    let config={
+      headers: {"Authorization" : `Bearer ${token}`},
+      params:{
+        page: currentPage,
+        size: 10
+      }
+    }
+    service.User.getList(config)
+      .then(({data})=>{
+        const {content,total:totalPage} = data.data
+        setUserList(userList=>[...userList, ...content])
+
+        setTotalPage(totalPage)
+
+        if(totalPage%10 !== 0){
+          total = Math.floor(totalPage/10) + 1
+        }else {
+          total = Math.floor(totalPage/10)
+        }
+        setLoading(false)
+      })
+  }
+
+  const infiniteScroll=()=>{
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if(clientHeight + scrollTop >= scrollHeight){
+      console.log(total)
+      // if(total!==currentPage+1){
+        setCurrent((currentPage) => currentPage + 1)
+      // }
+
     }
   }
 
 
   useEffect(()=>{
-    if(userList.length === 0){
-      service.User.getList(config)
-        .then(res=>{
-          setUserList(res.data.data.content)
-          setLoading(false)
-        })
-    }else {
-      setLoading(false)
-    }
+    window.addEventListener('scroll',infiniteScroll)
+    return
+  },[])
 
-  },[setUserList])
+  useEffect(()=>{
+    getUserList()
+  },[currentPage])
+
 
   if(loading)return '載入中....'
 
@@ -50,7 +77,7 @@ const UserManagement=()=>{
                     角色:{item.role}
                   </div>
                   <div>
-                   <Link to={'/user/userDetail'}>詳情</Link>
+                   <Link to={'/user/userDetail'}><h2 className={'text-blue-400'}>詳情</h2></Link>
                   </div>
                 </div>
 

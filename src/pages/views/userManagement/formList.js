@@ -31,8 +31,6 @@ const FormList=()=>{
         setUserList(res.data.data.content)
         setLoading(false)
       })
-
-
   }
   useEffect(()=>{
     getUserList()
@@ -44,8 +42,8 @@ const FormList=()=>{
 
 
   return(
-    <div className={'flex flex-col justify-center min-h-full'}>
-      <header className={'p-5 flex-grow-custom'}>
+    <div className={'flex flex-col justify-center'}>
+      <header className={'p-5 flex-grow-1'}>
         <h1 className={'ml-6 text-xl'}>會員管理(表格式)</h1>
       </header>
       <section className={'flex-1 px-5'}>
@@ -63,11 +61,11 @@ const FormList=()=>{
             {
               userList && userList.map(item =>{
                 return(
-                  <tr>
+                  <tr className={'h-10'}>
                     <td>{item.name?item.name:'不取名的垃圾'}</td>
                     <td>{item.username}</td>
                     <td>{item.role}</td>
-                    <td><Link to={'/user/userDetail'}>詳情</Link></td>
+                    <td><Link to={'/user/userDetail'}><h2  className={'text-blue-400'}>詳情</h2></Link></td>
                   </tr>
                 )
               })
@@ -76,8 +74,9 @@ const FormList=()=>{
           </table>
         </div>
       </section>
-      <footer className={'text-center p-5 flex-grow-custom'}>
+      <footer className={'mt-10 p-5 flex-grow-1 h-32'}>
         <Pagination totalPage={totalPage} currentPage={currentPage} setCurrent={setCurrent} />
+        <div className={'text-center'}>共有{totalPage}筆</div>
       </footer>
     </div>
   )
