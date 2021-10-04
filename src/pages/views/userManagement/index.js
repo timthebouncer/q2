@@ -5,11 +5,11 @@ import {userListContext} from '@/App'
 import {useContextSelector} from "use-context-selector";
 
 const UserManagement=()=>{
-  const [userList, setUserList,totalPage, setTotalPage,scrollState, setScrollState] = useContextSelector(userListContext,e=>
-      [e.userList,e.setUserList,e.totalPage, e.setTotalPage,e.scrollState, e.setScrollState])
+  const [userList, setUserList,totalPage, setTotalPage,scrollState, setScrollState,currentPage, setCurrent] = useContextSelector(userListContext,e=>
+      [e.userList,e.setUserList,e.totalPage, e.setTotalPage,e.scrollState, e.setScrollState,e.currentPage, e.setCurrent])
   const [loading, setLoading] = useState(true)
   const [isBottom, setBottom] = useState(false)
-  const [currentPage, setCurrent] = useState(0)
+
 
   let total = 0;
   let token =localStorage.getItem('token')
@@ -31,8 +31,10 @@ const UserManagement=()=>{
 
         if(totalPage%10 !== 0){
           total = Math.floor(totalPage/10) + 1
+           sessionStorage.setItem('total123',total)
         }else {
           total = Math.floor(totalPage/10)
+            sessionStorage.setItem('total123',total)
         }
         setLoading(false)
         setBottom(false)
@@ -41,8 +43,9 @@ const UserManagement=()=>{
 
   const infiniteScroll=()=>{
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if(clientHeight + scrollTop >= scrollHeight){
-      if(total === currentPage)return
+    if(clientHeight + scrollTop > scrollHeight){
+       let totals = sessionStorage.getItem('total123')
+        if(parseInt(totals) === currentPage)return
         setBottom(true)
         setCurrent((currentPage) => currentPage + 1)
     }
@@ -92,7 +95,10 @@ const UserManagement=()=>{
                     角色:{item.role}
                   </div>
                   <div>
-                   <Link to={'/user/userDetail'} onClick={()=>setScrollState(window.pageYOffset)}><h2 className={'text-blue-400'}>詳情</h2></Link>
+                   <Link to={'/user/userDetail'} onClick={()=> {
+                       setScrollState(window.pageYOffset)
+                       // setCurrent(currentPage)
+                   }}><h2 className={'text-blue-400'}>詳情</h2></Link>
                   </div>
                 </div>
 
