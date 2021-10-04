@@ -5,8 +5,10 @@ import {userListContext} from '@/App'
 import {useContextSelector} from "use-context-selector";
 
 const UserManagement=()=>{
-  const [userList, setUserList,totalPage, setTotalPage] = useContextSelector(userListContext,e=>[e.userList,e.setUserList,e.totalPage, e.setTotalPage])
+  const [userList, setUserList,totalPage, setTotalPage,scrollState, setScrollState] = useContextSelector(userListContext,e=>
+      [e.userList,e.setUserList,e.totalPage, e.setTotalPage,e.scrollState, e.setScrollState])
   const [loading, setLoading] = useState(true)
+  const [isBottom, setBottom] = useState(false)
   const [currentPage, setCurrent] = useState(0)
 
   let total = 0;
@@ -33,28 +35,41 @@ const UserManagement=()=>{
           total = Math.floor(totalPage/10)
         }
         setLoading(false)
+        setBottom(false)
       })
   }
 
   const infiniteScroll=()=>{
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
     if(clientHeight + scrollTop >= scrollHeight){
-      console.log(total)
-      // if(total!==currentPage+1){
+      if(total === currentPage)return
+        setBottom(true)
         setCurrent((currentPage) => currentPage + 1)
-      // }
-
     }
   }
 
-
   useEffect(()=>{
-    window.addEventListener('scroll',infiniteScroll)
-    return
+        setTimeout(()=>{
+            window.scrollTo(0, parseInt(scrollState));
+        },100)
   },[])
 
   useEffect(()=>{
-    getUserList()
+    window.addEventListener('scroll',infiniteScroll)
+    return()=>{
+        window.removeEventListener('scroll',infiniteScroll)
+    }
+  },[currentPage])
+
+  useEffect(()=>{
+      if(userList.length===0){
+          getUserList()
+      }else if(isBottom){
+          getUserList()
+      }else {
+          setLoading(false)
+      }
+
   },[currentPage])
 
 
@@ -63,7 +78,7 @@ const UserManagement=()=>{
   return(
     <div>
       <div className={'p-3'}>
-        <h1 className={'ml-6 text-xl'}>會員管理(列表式)</h1>
+        <h1 className={'ml-6 text-xl'} >會員管理(列表式)</h1>
       </div>
       <div className={'px-8'}>
         {
@@ -77,7 +92,7 @@ const UserManagement=()=>{
                     角色:{item.role}
                   </div>
                   <div>
-                   <Link to={'/user/userDetail'}><h2 className={'text-blue-400'}>詳情</h2></Link>
+                   <Link to={'/user/userDetail'} onClick={()=>setScrollState(window.pageYOffset)}><h2 className={'text-blue-400'}>詳情</h2></Link>
                   </div>
                 </div>
 

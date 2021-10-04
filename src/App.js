@@ -24,8 +24,9 @@ function App() {
   const UserListProvider = ({children})=>{
     const [userList, setUserList] = useState([])
     const [totalPage, setTotalPage] = useState(0)
+    const [scrollState, setScrollState] = useState(null)
     return(
-      <userListContext.Provider value={{userList,setUserList,totalPage, setTotalPage}}>
+      <userListContext.Provider value={{userList,setUserList,totalPage, setTotalPage,scrollState, setScrollState}}>
         {children}
       </userListContext.Provider>
     )
