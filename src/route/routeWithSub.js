@@ -12,23 +12,23 @@ function RouteWithSubRoutes({item,index,switchMenu}) {
         <ul className="sidebar-items" key={index}>
           <li className="flex mb-2">
             {
-              switchMenu===false? <><span className={'mr-4'}>{userIcon}</span> <span>{item.name}</span></>:<>
+              switchMenu===false? <><span className={'mr-4'}>{userIcon}</span> <span>{item.name}</span>
+                  {direction ? <i onClick={()=>setDirection(false)} className={'mt-1.5'}>{chevronDown}</i> :
+                          <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
+                  }</>:<>
                 <ToolTip text={item.name}>
-             <span className={"m-0 h-8"}>
-                {userIcon}
-              </span>
+                        <span className={"m-0 h-8"}>
+                        {userIcon}
+                      </span>
                 </ToolTip>
               </>
-            }
-            {direction ? <i onClick={()=>setDirection(false)} className={'mt-1.5'}>{chevronDown}</i> :
-              <i onClick={()=>setDirection(true)} className={'mt-1.5'}>{chevronUp}</i>
             }
           </li>
             {item.routes.map((item, i) => {
               return(
                 <>
                   {
-                  direction ? <Link key={i} to={item.path} className={'flex justify-center mb-3'}>
+                !switchMenu && direction ? <Link key={i} to={item.path} className={'flex justify-center mb-3'}>
                     {item.name}
                   </Link>:''
                 }
